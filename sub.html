@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@500&display=swap" rel="stylesheet">
+    <style type="text/css">
+        body{
+            background-color: #02b4e7;
+            overflow:hidden;
+            margin: 3rem; font-family:'Teko'; text-align: center;}
+        #instText { margin: 0; font-size:2.5rem; text-align: center; margin-top:7rem;}
+        .homeBtn {position: absolute; top:30rem; right:5rem; font-family:'Teko';
+            width:500px; height:150px; border-radius: 75px;
+            background-color: black; 
+        }
+        .homeBtn a{
+            text-decoration: none; color:white; font-size:60px; 
+        }
+        .loader{
+            
+            z-index:-2;
+            position:absolute;
+            display:grid; grid-template-columns: 1fr 3fr 2fr 2fr 1fr;
+            padding: 100px;
+            align-items:center;
+            top:50%;
+            left:50%;
+            transform: translate(-50%, -50%) rotate(0deg);
+            animation: rotate 20s linear infinite;
+            filter:blur(10px) contrast(20);
+        }
+        @keyframes rotate{
+            from{
+                transform: translate(-50%, -40%) rotate(0deg);
+            }
+            to{
+                transform: translate(-50%, -40%) rotate(360deg);
+            }
+        }
+        .particle {
+            background:#e431c4;
+            width:150px; height:150px;
+            border-radius:50%;
+        }
+        .particle:first-child,
+        .particle:last-child {
+            width:75px; height:75px;
+        }
+        .particle:nth-child(1),
+        .particle:nth-child(3),
+        .particle:nth-child(5),
+        .particle:nth-child(7),
+        .particle:nth-child(9){
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1)}
+            50% { transform: scale(1.9)}
+            70% { transform: scale(0.6)}
+            100% { transform: scale(1)}
+        }
+        .leftSpin {
+            animation: leftSpin 2.5s linear infinite;
+        }
+        @keyframes leftSpin {
+            from {
+                transform: rotate(0deg) translateX(50px);
+            }
+            to {
+                transform: rotate(360deg) translateX(50px);
+            }
+        }
+        .rightSpin {
+            animation: rightSpin 2s linear infinite;
+        }
+        @keyframes rightSpin {
+            from {
+                transform: rotate(360deg) translateX(50px);
+            }
+            to {
+                transform: rotate(0deg) translateX(50px);
+            }
+        }
+        .particle:nth-child(3){
+            animation-delay: .25s;
+        }
+        .particle:nth-child(5){
+            animation-delay: .75s;
+        }
+        .particle:nth-child(7){
+            animation-delay: 1.5s;
+        }
+        .particle:nth-child(9){
+            animation-delay: .3s;
+        }
+        #cover {
+            position:fixed; top:0px; left:0px;
+            background-color: #02b4e7;
+            z-index:-1;
+            width:100%; height:800px;
+        }
+
+        .btn{
+            background-color: black;
+            width: 100px; height:auto; border-radius: 20px;
+            margin:10px; color:white; font-family: 'Teko'; font-size:1.2rem
+
+        }
+        .no-drag {-ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;}
+
+    </style>
+</head>
+<body class="no-drag">
+    <input class="btn" type="button" onclick="audio.play(); changeColor('transparent');"  value="INSPECT"> <!--재생-->
+    <input class="btn" type="button" onclick="audio.pause(); changeColor('#02b4e7');" value="STOP"> <!--일시정지-->
+    <!-- <button id="inspect" onClick="inspect()">Inspect the Cells</button> -->
+    <!-- <iframe src="alien.mp3" allow="autoplay loop"></iframe> -->
+    <div id="cover"> </div>
+    <div class="loader">
+        <div class="particle"></div>
+        <div class="particle leftSpin"></div>
+        <div class="particle"></div>
+        <div class="particle rightSpin"></div>
+        <div class="particle"></div>
+        <div class="particle leftSpin"></div>
+        <div class="particle"></div>
+        <div class="particle rightSpin"></div>
+        <div class="particle"></div>
+    </div>
+    <div id="instText"></div>
+    <button class="homeBtn"><a href="index.html">I WILL keep on trying!</a></button>
+    <script type="text/javascript">
+        var instruction =" The truth is . . . YOU CAN'T KILL THE JELLY MONSTER.  <br>At least, we haven't been able to find the answer yet . . .  <br>Its cells have the ability to REGENERATE from whatever damage have been done.  <br>PLEASE, KEEP ON TRYING to find the solution that we weren't able to.<br>Good luck to you" ;
+        var instArr = instruction.split(" ");
+        
+        var myTimer = setInterval(print, 400);
+        var s=0;
+        function print() {
+            instText.innerHTML += instArr[s] + " ";
+            s++;
+            if(s == instArr.length){
+                clearInterval(myTimer);
+            }
+        }
+    
+
+        var audio = new Audio('alien.mp3');
+        audio.addEventListener('ended', function() { 
+            this.currentTime = 0;
+            this.play();
+        }, false);
+    
+
+
+        function changeColor(color) {
+            var  cover = document.getElementById('cover');
+            cover.style.backgroundColor = color; 
+        }
+    
+    </script>
+
+
+
+</body>
+</html>
